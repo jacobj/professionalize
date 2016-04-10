@@ -12,8 +12,7 @@ class InputTextArea extends React.Component {
     }
 
     checkText() {
-        this.setState({ outputText: 'Congrats, you clicked the button.'})
-        fetch('//', {
+        fetch('http://localhost:5000/profesh', {
               method: 'POST',
               headers: {
                   'Accept': 'application/json',
@@ -23,7 +22,9 @@ class InputTextArea extends React.Component {
                   inputText: this.state.inputText,
               })
         }).then(res => {
-            this.setState({ outputText: res.text });
+            return res.text();
+        }).then(text => {
+            this.setState({ outputText: text });
         });
     }
 
@@ -35,7 +36,9 @@ class InputTextArea extends React.Component {
         let outputTextEl;
 
         if (this.state.outputText) {
-            outputTextEl = <div className="output">{this.state.outputText}</div>
+            outputTextEl = (
+                <div className="output">{this.state.outputText}</div>
+            );
         }
 
         return (
